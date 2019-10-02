@@ -1,0 +1,9 @@
+
+As it stands now this repo does a few things. The file decision_maker.py is meant to be an interactive way to classify words continoulsy. As it works currentley the file create_embeddings.py creates word embedding for every label in the ontology by using its children in the tree as training data (an area for improvement could be improving the data used here). It takes spaces
+base embeddings as a starting point and retrains embeddings for the phrases we use for the ontology. This script then stores the mapping of categories to their embeddings in vectors_map.json. 
+
+The script decision maker has two steps, an initial threshold to see if it matches any labels in the ontology exactly or their synonyms almost exactly and then matching according to the embeddings described above. In order to accomplish the first step the scrip Scraper.py stores json mappings from lemmas to their labels in the ontology and from the labels in the ontology to their lemmas. The decision making script then uses this mappings in a call to check_lemmas.py which will return a match according to a threshold set in config.py or default to the embedding matching I mentioned previously. The matching by embeddings looks at cosine_similarity and starts at the first level of the tree and only considers the children of the best match in the next step. It then matches the highest similarity in any of the three levels it visits.
+
+In addittion the script ColorDivicerRGB.py creates a mapping from each label in the ontology to an RGB value so that in the future we can convert matches into their corresponding color and generate graphics. 
+
+The requirements to run everything are in requirements.txt
