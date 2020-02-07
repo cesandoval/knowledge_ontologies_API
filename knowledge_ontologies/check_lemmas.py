@@ -24,23 +24,30 @@ with open('knowledge_ontologies/LemmasToOntology.json', 'r') as fp:
 def check_lemmas(user_input):
 	wordnet_lemmatizer=WordNetLemmatizer()
 	input_lemma=wordnet_lemmatizer.lemmatize(user_input)
+	print(input_lemma, 234234324)
 	if input_lemma in lemma2key:
 		return lemma2key[input_lemma]
 	else:
-		lemma_syns=wn.synsets(input_lemma)[0]
-		max_similarity=0
-		closest_lemma=None
-		for word in key2lemmas.keys():
-			for lemma in key2lemmas[word]:
-				comparison_syns=wn.synsets(lemma)[0]
-				similarity=comparison_syns.path_similarity(lemma_syns)
-				if not similarity:
-					similarity=0
-				if similarity>max_similarity:
-					max_similarity=similarity
-					closest_lemma=word				
-		if max_similarity>=threshold:
-			return closest_lemma
-		else:
+		lemma_syns=wn.synsets(input_lemma)
+		if len(lemma_syns) > 0:
+			lemma_syns = lemma_syns[0]
+			max_similarity=0
+			closest_lemma=None
+			for word in key2lemmas.keys():
+				for lemma in key2lemmas[word]:
+					comparison_syns=wn.synsets(lemma)[0]
+					similarity=comparison_syns.path_similarity(lemma_syns)
+					if not similarity:
+						similarity=0
+					if similarity>max_similarity:
+						max_similarity=similarity
+						closest_lemma=word				
+			if max_similarity>=threshold:
+				return closest_lemma
+			else:
+				return None
+		else: 
 			return None
+
+			
 
