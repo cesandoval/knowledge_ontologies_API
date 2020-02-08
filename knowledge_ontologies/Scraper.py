@@ -1,11 +1,11 @@
 import random
 import requests
-from .spellcheck import spellcheck
+from spellcheck import spellcheck
 import re
 import json
 from pprint import pprint
 import nltk
-from .config import *
+from config import *
 from nltk.corpus import wordnet as wn
 from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer

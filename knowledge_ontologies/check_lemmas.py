@@ -24,7 +24,6 @@ with open('knowledge_ontologies/LemmasToOntology.json', 'r') as fp:
 def check_lemmas(user_input):
 	wordnet_lemmatizer=WordNetLemmatizer()
 	input_lemma=wordnet_lemmatizer.lemmatize(user_input)
-	print(input_lemma, 234234324)
 	if input_lemma in lemma2key:
 		return lemma2key[input_lemma]
 	else:
